@@ -8,4 +8,5 @@ links-wdw.json
 links.txt
 sandbox.py
 scripts/
+__pycache__/
 *.pyc
