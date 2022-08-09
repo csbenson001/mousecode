@@ -1,4 +1,3 @@
-
 GO_BASE  = "https://disneyworld.disney.go.com"
 GO_API   = "https://disneyworld.disney.go.com/api/wdpro"
 PRO_BASE = "https://api.wdpro.disney.go.com"
@@ -13,18 +12,18 @@ url = f'https://api.wdprapps.disney.com/explorer-service/public/finder/detail/80
 url = f'https://api.wdprapps.disney.com/facility-service/menu-items/240323?region=us'
 """
 
-class ParkId:
+class Park:
     MAGIC_KINGDOM = "80007944"
     EPCOT = "80007838"
     HOLLYWOOD_STUDIOS = "80007998"
     ANIMAL_KINGDOM = "80007823"
 
 class Base:
-    go = GO_BASE
-    goapi = GO_API
-    pro = PRO_BASE
-    app = APP_BASE
-    auth = AUTH_BASE
+    GO = GO_BASE
+    GO_API = GO_API
+    PRO = PRO_BASE
+    APP = APP_BASE
+    AUTH = AUTH_BASE
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:98.0) Gecko/20100101 Firefox/98.0",
