@@ -5,6 +5,7 @@ from typing import List, Dict
 from .utils import get_auth_headers
 from .utils import generate_restaurant_url
 from .utils import generate_dining_check_url
+from .utils import generate_tipboard_url
 from .constants import *
 
 from .paths import SWID_KEY_TXT
@@ -19,6 +20,12 @@ def get(url,alt_auth=False) -> requests.Response:
 def get_park(park_id: str) -> dict:
     url = f'{APP_BASE}/explorer-service/public/finder/detail/{park_id};entityType=theme-park'
     resp = requests.get(url,headers=get_auth_headers())
+    return resp.json()
+
+def get_tipboard(park_id: str) -> dict:
+    url = generate_tipboard_url(park_id=park_id)
+    headers = get_auth_headers()
+    resp = requests.get(url,headers=headers)
     return resp.json()
 
 def get_park_schedule(park_id: str, date: dt.date=None) -> dict:

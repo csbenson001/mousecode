@@ -59,4 +59,7 @@ def generate_dining_check_url(meal_period:str,party_size:str,search_date:str) ->
     req = requests.Request("GET",url,params=params)
     url = req.prepare().url
     return url
-    
+
+def generate_tipboard_url(park_id:str,userId:str) -> str:
+    path = f"{GO_BASE}/tipboard-vas/api/v1/parks/{park_id}/experiences"
+    return f"{path}?userId={userId}"
