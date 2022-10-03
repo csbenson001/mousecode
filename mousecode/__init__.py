@@ -2,6 +2,8 @@ from .constants import *
 
 from .classes import MouseAPI
 
+from .database import db, init_db
+
 from .functions import get
 from .functions import get_park
 from .functions import get_tipboard

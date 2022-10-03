@@ -8,10 +8,7 @@ from .utils import generate_dining_check_url
 from .utils import generate_tipboard_url
 from .constants import *
 
-from .paths import SWID_KEY_TXT
-from .paths import ATTRACTIONS_JSON
-from .paths import ENTERTAINMENTS_JSON
-from .paths import RESTAURANTS_JSON
+from . import paths
 
 def get(url,alt_auth=False) -> requests.Response:
     resp = requests.get(url,headers=get_auth_headers(alt_auth))
@@ -23,7 +20,10 @@ def get_park(park_id: str) -> dict:
     return resp.json()
 
 def get_tipboard(park_id: str) -> dict:
-    url = generate_tipboard_url(park_id=park_id)
+    swid = ''
+    with open(paths.SWID_KEY_TXT,'r+') as txtfile:
+        swid = txtfile.read()
+    url = generate_tipboard_url(park_id,swid)
     headers = get_auth_headers()
     resp = requests.get(url,headers=headers)
     return resp.json()
@@ -49,7 +49,7 @@ def get_all_dining_availability(meal_period:str,party_size:str,search_date:str) 
     
 def __get_swid() -> str:
     swid = ""
-    with open(SWID_KEY_TXT,"r") as txtfile:
+    with open(paths.SWID_KEY_TXT,"r") as txtfile:
         swid = txtfile.read()
     return swid
 

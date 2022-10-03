@@ -1,6 +1,9 @@
+import json
 import requests
 import datetime as dt
 from dateutil.parser import parse
+
+from . import objects as objs
 
 from .constants import GO_BASE
 from .constants import PRO_BASE
@@ -24,14 +27,19 @@ class MouseAPI:
         self.__fetch_token_data()
         self.__headers = HEADERS
         
-    def get_park(self,park_id: str) -> dict:
-        url = f'{APP_BASE}/explorer-service/public/finder/detail/{park_id};entityType=theme-park'
+    def get_park(self,park_id: str,**kwargs) -> dict:
+        url = (f'{APP_BASE}/explorer-service/public/finder/detail/'
+               f'{park_id};entityType=theme-park')
         headers = self.__headers
         self.__check_auth()
         headers['Authorization'] = f'Bearer {self.__token}'
-        
+        if kwargs.get('log'):
+            print(url)
         resp = requests.get(url,headers=headers)
-        return resp.json()
+        if kwargs.get('log'):
+            with open('temp.json','w+') as jsonfile:
+                json.dump(resp.json(),jsonfile)
+        return objs.Park(resp.json())
         
     def get_park_schedule(self,park_id:str, date:str=None) -> dict:
         if date is None:
@@ -64,8 +72,7 @@ class MouseAPI:
         
         resp = requests.get(url,headers=headers)
         return resp.json()
-        
-        
+
     def __check_auth(self):
         try:
             if self.__time_left() < 15:
@@ -84,7 +91,7 @@ class MouseAPI:
     def __fetch_token_data(self,alt=False):
         if alt:
             url = f'{AUTH_BASE_ALT}'
-            resp = requests.get(url,headers=HEADERS.copy())
+            resp = requests.get(url,headers=HEADERS)
         else:
             params = {'grant_type':'assertion',
                       'assertion_type':'public',
