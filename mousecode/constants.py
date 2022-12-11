@@ -5,10 +5,11 @@ APP_BASE = "https://api.wdprapps.disney.com"
 AUTH_BASE = "https://authorization.go.com/token"
 AUTH_BASE_ALT = "https://disneyworld.disney.go.com/authentication/get-client-token/"
 
-MAGIC_KINGDOM      = "80007944"
-EPCOT              = "80007838"
-HOLLYWOOD_STUDIOS  = "80007998"
-ANIMAL_KINGDOM     = "80007823"
+DISNEY_WORLD = DW = "80007798"
+MAGIC_KINGDOM = MK = "80007944"
+EPCOT = EP = "80007838"
+HOLLYWOOD_STUDIOS = HS = "80007998"
+ANIMAL_KINGDOM = AK = "80007823"
 
 BREAKFAST = '80000712'
 BRUNCH    = '80000713'
@@ -31,7 +32,9 @@ HEADERS = {
 
 
 """
+url = f'https://disneyworld.disney.go.com/finder/api/v1/explorer-service/dining-availability-list/false/wdw/80007798;entityType=destination/{date}/{party_size}/?searchTime={search_time}'
 url = f'https://disneyworld.disney.go.com/tipboard-vas/api/v1/parks/{t.MK}/experiences?userId={userId}'
 url = f'https://api.wdprapps.disney.com/explorer-service/public/finder/detail/80007944;entityType=theme-park'
 url = f'https://api.wdprapps.disney.com/facility-service/menu-items/240323?region=us'
 """
+

@@ -1,0 +1,25 @@
+PARK (starting point)
+url = 'https://api.wdprapps.disney.com/facility-service/theme-parks/{park_id}?region=us'
+
+MONORAIL STATION
+url = 'https://api.wdprapps.disney.com/facility-service/theme-parks/{park_id}/monorail-stations?region=us'
+url = 'https://api.wdprapps.disney.com/facility-service/monorail-stations/{monorail_station_id}?region=us'
+
+BUS STOPS
+url = 'https://api.wdprapps.disney.com/facility-service/theme-parks/{park_id}/bus-stops?region=us'
+url = 'https://api.wdprapps.disney.com/facility-service/bus-stops/{bus_stop_id}?region=us'
+
+CHARACTER APPEARANCE
+url = f'https://api.wdprapps.disney.com/facility-service/theme-parks/{park_id}/character-appearances?region=us'
+url = f'https://api.wdprapps.disney.com/facility-service/characters/{character_id}?region=us'
+
+SCHEDULE
+url = 'https://api.wdprapps.disney.com/facility-service/schedules/{park_id}?region=us'
+
+ANCESTOR DESTINATION
+url = 'https://api.wdprapps.disney.com/facility-service/destinations/{disney_id}?region=us'.format(disney_id=mc.DISNEY_WORLD)
+
+ATTRACTIONS
+url = 'https://api.wdprapps.disney.com/facility-service/destinations/{disney_id}/attractions?region=us'.format(disney_id=mc.DISNEY_WORLD)
+save_as = 'attraction'
+url = 'https://api.wdprapps.disney.com/facility-service/attractions/{attraction_id}?region=us'

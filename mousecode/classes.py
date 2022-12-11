@@ -3,7 +3,7 @@ import requests
 import datetime as dt
 from dateutil.parser import parse
 
-from . import objects as objs
+from .park import Park
 
 from .constants import GO_BASE
 from .constants import PRO_BASE
@@ -27,7 +27,7 @@ class MouseAPI:
         self.__fetch_token_data()
         self.__headers = HEADERS
         
-    def get_park(self,park_id: str,**kwargs) -> dict:
+    def get_park(self,park_id:str,**kwargs) -> dict:
         url = (f'{APP_BASE}/explorer-service/public/finder/detail/'
                f'{park_id};entityType=theme-park')
         headers = self.__headers
@@ -39,7 +39,10 @@ class MouseAPI:
         if kwargs.get('log'):
             with open('temp.json','w+') as jsonfile:
                 json.dump(resp.json(),jsonfile)
-        return objs.Park(resp.json())
+        return Park.from_json(resp.json())
+    
+    def get_park_wait_times(self):
+        ...
         
     def get_park_schedule(self,park_id:str, date:str=None) -> dict:
         if date is None:
@@ -73,6 +76,9 @@ class MouseAPI:
         resp = requests.get(url,headers=headers)
         return resp.json()
 
+    def get_attraction(self,attraction_id:str):
+        pass
+    
     def __check_auth(self):
         try:
             if self.__time_left() < 15:
@@ -110,5 +116,3 @@ class MouseAPI:
         with open(f"{INFO_FOLDER_PATH}/token_expiration.txt","w+") as txtfile:
             txtfile.write(f'{self.__expires_at}\n{self.__token}')
         
-
-    
