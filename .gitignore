@@ -15,4 +15,5 @@ __pycache__/
 *.pyc
 sandbox.ipynb
 .env
+tracker.py
 
