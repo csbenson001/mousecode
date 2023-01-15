@@ -1,4 +1,5 @@
 import requests
+from urllib.parse import parse_qs, unquote_plus
 import datetime as dt
 from typing import List, Dict
 
@@ -50,9 +51,12 @@ def get_dining_availability(restaurant_id:str,time:str,party_size:int,date:str,*
         name = kwargs.get("name")
     
     url = utils.generate_restaurant_url(restaurant_id,time,party_size,date)
+    
     if not headers:
         headers = utils.get_auth_headers()
+    
     resp = requests.get(url,headers=headers)
+
     if kwargs.get("debug"):
         print(url)
         print(headers['Authorization'])
@@ -60,14 +64,8 @@ def get_dining_availability(restaurant_id:str,time:str,party_size:int,date:str,*
             print(resp.json())
         except:
             pass
-    availability = resp.json().get('availability',{})
-    key = list(availability.keys())[0]
-    available_times = availability[key].get('availableTimes',[{}])
 
-    offers = []
-    if available_times[0].get("offers"):
-        for o in available_times[0]["offers"]:
-            offers.append(DiningOffer(name,o,party_size))
+    offers = _extract_offers(resp.json(), party_size)
     
     return offers
 
@@ -92,3 +90,32 @@ def get_restaurant_name(restaurant_id:str):
         name = result[0]
     conn.close()
     return name
+
+rich = utils.rich
+def _extract_offers(resp_json:Dict,url:str):
+    availability = resp_json.get('availability',{})
+    key = list(availability.keys())[0]
+    available_times = availability[key].get('availableTimes',[{}])
+    
+    query = url[url.find("?")+1:]
+    restaurant_id = url[url.rfind("/") + 1:url.find(";entity")]
+    params = parse_qs(query)
+
+    offers = []
+    if available_times[0].get("offers"):
+        for offer in available_times[0]["offers"]:
+            offer["datetime"] = offer.pop("dateTime")
+            offer["party_size"] =  params["partySize"][0]
+            offer["offer_id"] = offer["url"][offer["url"].rfind("/")+1:]
+            offer["restaurant_id"] = restaurant_id
+            offers.append(offer)
+            # offers.append(DiningOffer(name,offer,party_size))
+    return offers
+
+
+
+
+
+
+
+

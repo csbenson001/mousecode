@@ -16,4 +16,6 @@ __pycache__/
 sandbox.ipynb
 .env
 tracker.py
+auth.txt
 
+mousecode.zip

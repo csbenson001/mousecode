@@ -5,7 +5,7 @@ from collections import UserList
 class DiningOffer:
     def __init__(self,name:str,offer_dict:Dict,party_size:int):
         time = offer_dict['time']
-        datetime = offer_dict['dateTime']
+        datetime = offer_dict.get("datetime",offer_dict.get("dateTime"))
         self.name: str = name
         self.datetime: dt.datetime = (dt.datetime
                                       .strptime(datetime,r'%Y-%m-%dT%H:%M:%S%z'))
